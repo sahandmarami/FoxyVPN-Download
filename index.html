@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FoxyVPN — دانلود برای ویندوز و اندروید</title>
-<meta name="description" content="دانلود مستقیم فیلترشکن FoxyVPN برای ویندوز و اندروید — سریع، امن و ساده">
+<title>FoxyVPN — دانلود برای ویندوز، اندروید و iOS</title>
+<meta name="description" content="دانلود مستقیم فیلترشکن FoxyVPN برای ویندوز و اندروید + راهنمای iOS با اپ رایگان Happ — سریع، امن و ساده">
 <meta name="theme-color" content="#0b0e17">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦊</text></svg>">
 <style>
@@ -61,6 +61,12 @@
   .card:hover{transform:translateY(-7px)}
   .card.win:hover{border-color:rgba(77,163,255,.55); box-shadow:0 18px 60px rgba(45,108,255,.22); background:rgba(45,108,255,.06)}
   .card.and:hover{border-color:rgba(61,220,132,.55); box-shadow:0 18px 60px rgba(52,199,89,.20); background:rgba(52,199,89,.06)}
+  /* iOS کارت پهن راهنما */
+  .card.ios{grid-column:1 / -1}
+  .card.ios:hover{border-color:rgba(90,200,250,.55); box-shadow:0 18px 60px rgba(10,132,255,.20); background:rgba(10,132,255,.06)}
+  .ios .icon{background:linear-gradient(145deg,rgba(90,200,250,.25),rgba(10,132,255,.08)); border:1px solid rgba(90,200,250,.4)}
+  .ios .ver .dot{background:#5ac8fa; box-shadow:0 0 8px #5ac8fa}
+  .btn.ios{background:linear-gradient(135deg,#5ac8fa,#0a84ff); box-shadow:0 10px 30px rgba(10,132,255,.30)}
 
   .card .head{display:flex; align-items:center; gap:16px}
   .icon{width:62px; height:62px; border-radius:18px; display:flex; align-items:center; justify-content:center; flex-shrink:0}
@@ -114,7 +120,7 @@
 <div class="wrap">
   <div class="logo">🦊</div>
   <h1><span class="grad">FoxyVPN</span></h1>
-  <p class="sub">فیلترشکن <b>سریع</b>، <b>امن</b> و <b>ساده</b> — پلتفرمت را انتخاب کن،<br>دانلود بلافاصله شروع می‌شود.</p>
+  <p class="sub">فیلترشکن <b>سریع</b>، <b>امن</b> و <b>ساده</b> — پلتفرمت را انتخاب کن،<br>دانلود بلافاصله شروع می‌شود. iOS؟ فقط اپ رایگان Happ + یک QR.</p>
 
   <div class="grid">
 
@@ -169,6 +175,30 @@
         </svg>
       </span>
       <div class="hint">اندروید ۷ به بالا — اگر نصب نشد، «مجوز نصب منابع ناشناس» را بده</div>
+    </a>
+
+    <!-- ================= iOS (HAPP) ================= -->
+    <a class="card ios" id="cardIos" href="https://apps.apple.com/us/app/happ-proxy-utility/id6504287215" target="_blank" rel="noopener">
+      <span class="ver"><span class="dot"></span><span>iOS 14+</span></span>
+      <div class="head">
+        <span class="icon">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M16.365 12.79c-.02-2.03 1.66-3 1.73-3.05-.94-1.38-2.41-1.57-2.94-1.59-1.25-.13-2.44.73-3.07.73-.63 0-1.61-.71-2.65-.69-1.36.02-2.62.79-3.32 2.01-1.42 2.46-.36 6.1 1.02 8.09.67.98 1.47 2.07 2.52 2.03 1.01-.04 1.39-.65 2.61-.65 1.22 0 1.56.65 2.63.63 1.09-.02 1.78-.99 2.44-1.97.78-1.13 1.1-2.23 1.12-2.29-.02-.01-2.09-.8-2.11-3.25ZM14.3 6.72c.56-.68.94-1.62.84-2.56-.81.03-1.79.54-2.37 1.22-.52.6-.98 1.56-.86 2.48.9.07 1.83-.46 2.39-1.14Z" fill="#5ac8fa"/>
+          </svg>
+        </span>
+        <div>
+          <div class="pname">آیفون و آیپد</div>
+          <div class="pdesc">با اپ رایگان Happ — بدون حساب توسعه‌دهنده، بدون هزینه</div>
+        </div>
+      </div>
+      <div class="size"><span>۱) Happ را نصب کن</span><span>·</span><span>۲) QR/لینک را اضافه کن</span><span>·</span><span>۳) اتصال</span></div>
+      <span class="btn ios">
+        نصب Happ از App Store
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M7 17 17 7m0 0H9m8 0v8"/>
+        </svg>
+      </span>
+      <div class="hint">کانفیگ (لینک یا QR) را از فروشندهٔ کلید بگیرید — در Happ دکمهٔ «+» بزنید و اضافه کنید؛ Streisand و Hiddify هم کار می‌کنند</div>
     </a>
 
   </div>
