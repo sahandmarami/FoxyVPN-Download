@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FoxyVPN — ابزار رفع مشکل اتصال</title>
+<meta name="theme-color" content="#0b0e17">
+<style>
+  @font-face{font-family:'Vazirmatn';src:url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-Regular.woff2') format('woff2');font-weight:400;font-display:swap}
+  @font-face{font-family:'Vazirmatn';src:url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-Bold.woff2') format('woff2');font-weight:700;font-display:swap}
+  @font-face{font-family:'Vazirmatn';src:url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-Black.woff2') format('woff2');font-weight:900;font-display:swap}
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{--bg:#0b0e17;--card:rgba(255,255,255,.045);--border:rgba(255,255,255,.09);--text:#eef1f8;--muted:#9aa3b8;--fox:#ff7a18}
+  html{scroll-behavior:smooth}
+  body{min-height:100vh;display:flex;flex-direction:column;font-family:'Vazirmatn',Tahoma,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+  .orb{position:fixed;border-radius:50%;filter:blur(90px);z-index:0}
+  .orb1{width:480px;height:480px;background:#ff7a18;top:-170px;right:-120px;opacity:.16;animation:f1 14s ease-in-out infinite}
+  .orb2{width:420px;height:420px;background:#2d6cff;bottom:-150px;left:-110px;opacity:.15;animation:f2 17s ease-in-out infinite}
+  @keyframes f1{50%{transform:translateY(34px)}}
+  @keyframes f2{50%{transform:translateY(-28px)}}
+  .wrap{position:relative;z-index:1;max-width:720px;width:100%;margin:0 auto;padding:34px 18px 10px}
+  .logo{width:76px;height:76px;border-radius:24px;display:flex;align-items:center;justify-content:center;font-size:38px;background:linear-gradient(145deg,rgba(255,122,24,.22),rgba(255,122,24,.05));border:1px solid rgba(255,122,24,.3);margin:0 auto 14px}
+  h1{text-align:center;font-size:30px;font-weight:900}
+  h1 .grad{background:linear-gradient(90deg,#ffb347,#ff7a18 55%,#ff4d00);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{text-align:center;color:var(--muted);font-size:14.5px;line-height:2;margin-top:8px}
+  .why{margin:20px auto 0;background:rgba(255,122,24,.07);border:1px solid rgba(255,122,24,.25);border-radius:18px;padding:15px 18px;font-size:13.5px;line-height:2.1;color:#ffd9b0}
+  .why b{color:#ffce8a}
+  .box{margin-top:20px;background:var(--card);border:1px solid var(--border);border-radius:22px;padding:20px}
+  label{display:block;font-size:14px;font-weight:700;margin-bottom:8px;color:#ffce8a}
+  textarea,input[type=text]{width:100%;background:rgba(0,0,0,.35);border:1px solid var(--border);border-radius:14px;color:var(--text);font-family:inherit;font-size:13.5px;padding:13px 14px;direction:ltr;text-align:left;outline:none;transition:border-color .2s}
+  textarea{min-height:96px;resize:vertical}
+  textarea:focus,input[type=text]:focus{border-color:rgba(255,122,24,.55)}
+  .row{display:flex;gap:12px;margin-top:12px;flex-wrap:wrap}
+  .row>div{flex:1;min-width:220px}
+  .go{margin-top:16px;width:100%;padding:16px;border:none;border-radius:16px;font-family:inherit;font-size:17px;font-weight:900;color:#fff;background:linear-gradient(135deg,#ff9a3d,#ff6a00);box-shadow:0 10px 30px rgba(255,122,24,.30);cursor:pointer;transition:filter .25s,transform .15s}
+  .go:hover{filter:brightness(1.12)}
+  .go:active{transform:scale(.975)}
+  .ghost{background:transparent;border:1px solid var(--border);color:var(--muted);box-shadow:none;font-size:14px;padding:12px}
+  .ghost:hover{color:var(--text);border-color:rgba(255,255,255,.25)}
+  #out{display:none;margin-top:18px}
+  .cfg{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:16px;margin-bottom:14px;animation:pop .3s ease}
+  @keyframes pop{from{opacity:0;transform:translateY(8px)}}
+  .cfg h3{font-size:15px;font-weight:900;display:flex;align-items:center;gap:8px}
+  .cfg h3 .d{width:8px;height:8px;border-radius:50%;background:#3ddc84;box-shadow:0 0 8px #3ddc84;display:inline-block}
+  .cfg p{font-size:12.5px;color:var(--muted);margin-top:4px;line-height:1.9}
+  .lnk{margin-top:10px;width:100%;background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:12px;color:#cdd6ea;font-size:11.5px;padding:10px 12px;direction:ltr;text-align:left;word-break:break-all;white-space:pre-wrap}
+  .cp{margin-top:10px;width:100%;padding:12px;border:none;border-radius:12px;font-family:inherit;font-size:14.5px;font-weight:900;color:#fff;background:linear-gradient(135deg,#2d8bff,#0a5bd3);cursor:pointer}
+  .cp:active{transform:scale(.98)}
+  .steps{margin-top:8px;background:rgba(61,220,132,.06);border:1px solid rgba(61,220,132,.25);border-radius:18px;padding:15px 18px;font-size:13.5px;line-height:2.2;color:#c9f2d6}
+  .steps b{color:#8effb1}
+  .steps ol{padding-right:20px}
+  .err{display:none;margin-top:12px;background:rgba(255,60,60,.08);border:1px solid rgba(255,60,60,.3);color:#ffb3b3;border-radius:14px;padding:12px 15px;font-size:13px;line-height:2}
+  footer{position:relative;z-index:1;margin-top:auto;padding:28px 20px;text-align:center;color:var(--muted);font-size:13px;line-height:2.2}
+  footer a{color:#ffb35c;text-decoration:none}
+  .ok-copy{background:linear-gradient(135deg,#3ddc84,#1ea94c)!important}
+</style>
+</head>
+<body>
+<div class="orb orb1"></div><div class="orb orb2"></div>
+
+<div class="wrap">
+  <div class="logo">🦊</div>
+  <h1><span class="grad">ابزار رفع مشکل اتصال</span></h1>
+  <p class="sub">اگر کانفیگ پینگ منفی می‌دهد یا وصل نمی‌شود، این صفحه کانفیگ را برای <b>شبکه‌ی ایران</b> اصلاح می‌کند.</p>
+
+  <div class="why">
+    <b>چرا وصل نمی‌شود؟</b> دو مشکل وجود دارد:<br>
+    ۱) اینترنت ایران برای دامنه‌ی ما <b>آی‌پی جعلی</b> (10.10.34.x) می‌فرستد؛ راه‌حل: اتصال مستقیم به آی‌پی کلادفلر.<br>
+    ۲) لینک‌های قبلی <b>ALPN=h2</b> داشتند که WebSocket را قطع می‌کند؛ راه‌حل: ALPN=http/1.1.<br>
+    این ابزار هر دو را خودکار درست می‌کند. ✅
+  </div>
+
+  <div class="box">
+    <label>لینک vless فعلی‌ات را اینجا بچسبان (از تب iOS کلیدساز یا کانفیگ قبلی):</label>
+    <textarea id="src" placeholder="vless://........"></textarea>
+    <div class="err" id="err"></div>
+    <button class="go" onclick="fix()">🔧 ساخت کانفیگ اصلاح‌شده</button>
+    <button class="go ghost" onclick="toggleManual()">لینک ندارم — با UUID و Path دستی بساز</button>
+
+    <div id="manual" style="display:none">
+      <div class="row">
+        <div>
+          <label>UUID (از داخل کانفیگ، فیلد «رمز/UUID»):</label>
+          <input type="text" id="mu" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" dir="ltr">
+        </div>
+        <div>
+          <label>Path (فیلد «مسیر/path»):</label>
+          <input type="text" id="mp" placeholder="/64کاراکتر-هگز" dir="ltr">
+        </div>
+      </div>
+      <button class="go" onclick="fixManual()">🔧 ساخت از UUID و Path</button>
+    </div>
+
+    <div id="out"></div>
+  </div>
+
+  <div class="steps" style="margin-top:18px">
+    <b>راه دوم (بدون لینک جدید) — ویرایش کانفیگ فعلی در v2RayTun:</b>
+    <ol>
+      <li>روی کانفیگ بزن → <b>ویرایش</b></li>
+      <li>آدرس را بگذار: <b dir="ltr">104.21.24.4</b> (پشتیبان: <b dir="ltr">172.67.215.65</b>)</li>
+      <li>SNI و Host هر دو = <b dir="ltr">ios.foxyv.kdns.fr</b></li>
+      <li>اگر فیلد <b>ALPN</b> هست: پاکش کن یا فقط <b dir="ltr">http/1.1</b> بگذار (هیچ‌وقت h2!)</li>
+      <li>ذخیره → پینگ → وصل</li>
+    </ol>
+  </div>
+</div>
+
+<footer>
+  بعد از اتصال موفق، دکمه‌ی آپدیت سابسکریپشن را بزن — از داخل تونل خودت می‌آید. 🦊<br>
+  <a href="index.html">بازگشت به صفحه‌ی دانلود</a>
+</footer>
+
+<script>
+const DOMAIN='ios.foxyv.kdns.fr';
+const IPS=[['104.21.24.4','سرور اصلی'],['172.67.215.65','سرور پشتیبان']];
+
+function qs(s){const o={};s.split('&').forEach(kv=>{const i=kv.indexOf('=');if(i>0)o[kv.slice(0,i)]=kv.slice(i+1)});return o}
+function parseLink(t){
+  t=t.trim().replace(/\s+/g,'');
+  const m=t.match(/^vless:\/\/([^@\s]+)@([^:\s]+):(\d+)\?([^#]*)#?(.*)$/);
+  if(!m)return null;
+  const q=qs(m[4]);
+  const dom=(q.host&&/^[a-z0-9.\-]+$/i.test(decodeURIComponent(q.host)))?decodeURIComponent(q.host):(q.sni?decodeURIComponent(q.sni):DOMAIN);
+  return {uuid:m[1], pathRaw:q.path||null, name:decodeURIComponent(m[5]||'FoxyVPN'), dom:dom};
+}
+function buildLinks(uuid,pathRaw,name,dom){
+  const base=(addr)=>'vless://'+uuid+'@'+addr+':443?encryption=none&security=tls&sni='+dom+'&fp=chrome&type=ws&host='+dom+'&path='+pathRaw+'&alpn=http%2F1.1';
+  const out=IPS.map((x,i)=>({title:x[1]+' — '+x[0],desc:'اتصال مستقیم به آی‌پی کلادفلر؛ DNS ایران دور زده می‌شود.',link:base(x[0])+'#'+encodeURIComponent(name+' CF'+(i+1))}));
+  out.push({title:'نسخه‌ی دامنه‌دار (برای Happ / آیفون)',desc:'وقتی DNS درست کار کند یا داخل تونل؛ ALPN اصلاح‌شده.',link:base(dom)+'#'+encodeURIComponent(name+' DNS')});
+  return out;
+}
+function render(list){
+  const out=document.getElementById('out');
+  out.innerHTML='';
+  list.forEach(c=>{
+    const d=document.createElement('div');d.className='cfg';
+    d.innerHTML='<h3><span class="d"></span>'+c.title+'</h3><p>'+c.desc+'</p><div class="lnk"></div><button class="cp">📋 کپی کانفیگ</button>';
+    d.querySelector('.lnk').textContent=c.link;
+    d.querySelector('.cp').onclick=ev=>copy(c.link,ev.target);
+    out.appendChild(d);
+  });
+  out.style.display='block';
+}
+function copy(t,btn){
+  const done=()=>{const o=btn.textContent;btn.textContent='✅ کپی شد';btn.classList.add('ok-copy');setTimeout(()=>{btn.textContent=o;btn.classList.remove('ok-copy')},1600)};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done).catch(()=>fallback(t,done))}
+  else fallback(t,done);
+}
+function fallback(t,done){
+  const ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';
+  document.body.appendChild(ta);ta.select();try{document.execCommand('copy')}catch(e){}document.body.removeChild(ta);done();
+}
+function showErr(msg){const e=document.getElementById('err');e.textContent=msg;e.style.display='block'}
+function toggleManual(){const m=document.getElementById('manual');m.style.display=m.style.display==='none'?'block':'none'}
+function fix(){
+  document.getElementById('err').style.display='none';
+  const p=parseLink(document.getElementById('src').value);
+  if(!p||!p.uuid){showErr('لینک شناسایی نشد. لینک vless کامل را بچسبان — یا از دکمه‌ی «دستی» استفاده کن.');return}
+  if(!p.pathRaw){showErr('در لینک پارامتر path پیدا نشد. از حالت دستی (UUID + Path) استفاده کن.');return}
+  render(buildLinks(p.uuid,p.pathRaw,p.name,p.dom));
+  document.getElementById('out').scrollIntoView({behavior:'smooth'});
+}
+function fixManual(){
+  document.getElementById('err').style.display='none';
+  const u=document.getElementById('mu').value.trim();
+  let path=document.getElementById('mp').value.trim();
+  if(!/^[0-9a-fA-F-]{32,36}$/.test(u)){showErr('UUID معتبر نیست — از داخل کانفیگ (فیلد رمز/UUID) عیناً کپی کن.');return}
+  if(!path){showErr('Path خالی است — از داخل کانفیگ (فیلد مسیر/Path) کپی کن (مثلاً /64کاراکتر).');return}
+  if(!path.startsWith('/'))path='/'+path;
+  render(buildLinks(u,encodeURIComponent(path),'FoxyVPN',DOMAIN));
+  document.getElementById('out').scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>
