@@ -125,9 +125,12 @@ function parseLink(t){
   return {uuid:m[1], pathRaw:q.path||null, name:decodeURIComponent(m[5]||'FoxyVPN'), dom:dom};
 }
 function buildLinks(uuid,pathRaw,name,dom){
-  const base=(addr)=>'vless://'+uuid+'@'+addr+':443?encryption=none&security=tls&sni='+dom+'&fp=chrome&type=ws&host='+dom+'&path='+pathRaw+'&alpn=http%2F1.1';
-  const out=IPS.map((x,i)=>({title:x[1]+' — '+x[0],desc:'اتصال مستقیم به آی‌پی کلادفلر؛ DNS ایران دور زده می‌شود.',link:base(x[0])+'#'+encodeURIComponent(name+' CF'+(i+1))}));
-  out.push({title:'نسخه‌ی دامنه‌دار (برای Happ / آیفون)',desc:'وقتی DNS درست کار کند یا داخل تونل؛ ALPN اصلاح‌شده.',link:base(dom)+'#'+encodeURIComponent(name+' DNS')});
+  const dom2='m.foxyv.kdns.fr';
+  const base=(addr,d)=>'vless://'+uuid+'@'+addr+':443?encryption=none&security=tls&sni='+d+'&fp=chrome&type=ws&host='+d+'&path='+pathRaw+'&alpn=http%2F1.1';
+  const out=IPS.map((x,i)=>({title:x[1]+' — '+x[0],desc:'اتصال مستقیم به آی‌پی کلادفلر؛ DNS ایران دور زده می‌شود.',link:base(x[0],dom)+'#'+encodeURIComponent(name+' CF'+(i+1))}));
+  out.push({title:'🧪 دامنه‌ی جایگزین m. — سرور اصلی (104.21.24.4)',desc:'اگر وصل نشدی: احتمالاً فیلترینگ ایران اسم دامنه‌ی داخل TLS (SNI) را می‌بُرد. این یکی دامنه‌ی دیگری دارد — امتحانش کن.',link:base(IPS[0][0],dom2)+'#'+encodeURIComponent(name+' M1')});
+  out.push({title:'🧪 دامنه‌ی جایگزین m. — سرور پشتیبان (172.67.215.65)',desc:'همان حالت بالا با آی‌پی پشتیبان. هر دو را امتحان کن و هرکدام ریل‌پینگ داد همان را نگه دار.',link:base(IPS[1][0],dom2)+'#'+encodeURIComponent(name+' M2')});
+  out.push({title:'نسخه‌ی دامنه‌دار (برای Happ / آیفون)',desc:'وقتی DNS درست کار کند یا داخل تونل؛ ALPN اصلاح‌شده.',link:base(dom,dom)+'#'+encodeURIComponent(name+' DNS')});
   return out;
 }
 function render(list){
