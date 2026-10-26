@@ -176,6 +176,7 @@
 
 <footer>
   ساخته‌شده برای <a href="https://github.com/sahandmarami/FoxyVPN-Rebuilt" target="_blank" rel="noopener">پروژهٔ FoxyVPN</a> در گیت‌هاب — دانلود مستقیم از Release های رسمی
+  <div>ابزار مدیریت کلید: <a id="keygenLink" href="https://github.com/sahandmarami/FoxyVPN-Rebuilt/releases/download/v3.4.1-main-v2.3.1-keygen/FoxyKeygen-v2.3.1.apk">FoxyKeygen <span id="kgVer">v2.3.1</span></a></div>
   <div class="status" id="status">در حال بررسی آخرین نسخه…</div>
 </footer>
 
@@ -183,7 +184,8 @@
 /* لینک‌های پشتیبان (اگر API در دسترس نبود) */
 var FALLBACK = {
   win: 'https://github.com/sahandmarami/FoxyVPN-Rebuilt/releases/download/desktop-v1.1.0/FoxyVPN-Desktop.exe',
-  and: 'https://github.com/sahandmarami/FoxyVPN-Rebuilt/releases/download/v3.4.1-main-v2.3.1-keygen/FoxyVPN-v3.4.1.apk'
+  and: 'https://github.com/sahandmarami/FoxyVPN-Rebuilt/releases/download/v3.4.1-main-v2.3.1-keygen/FoxyVPN-v3.4.1.apk',
+  kg: 'https://github.com/sahandmarami/FoxyVPN-Rebuilt/releases/download/v3.4.1-main-v2.3.1-keygen/FoxyKeygen-v2.3.1.apk'
 };
 function mb(b){ return (b/1048576).toFixed(1) + ' MB'; }
 function faVer(t){ var m = t.match(/v?(\d+\.\d+(\.\d+)?)/); return m ? m[1] : ''; }
@@ -192,7 +194,7 @@ fetch('https://api.github.com/repos/sahandmarami/FoxyVPN-Rebuilt/releases?per_pa
 .then(function(r){ if(!r.ok) throw 0; return r.json(); })
 .then(function(rels){
   if(!Array.isArray(rels)) throw 0;
-  var winRel = null, andRel = null;
+  var winRel = null, andRel = null, kgRel = null;
   rels.forEach(function(rel){
     (rel.assets||[]).forEach(function(a){
       /* ویندوز: جدیدترین ریلیز desktop-* که exe دارد */
@@ -201,6 +203,8 @@ fetch('https://api.github.com/repos/sahandmarami/FoxyVPN-Rebuilt/releases?per_pa
       if(!winRel && /^windows-/.test(rel.tag_name) && /^FoxyVPN\.exe$/i.test(a.name)) winRel = {rel:rel, a:a};
       /* اندروید: جدیدترین ریلیزی که FoxyVPN-vX.Y.Z.apk دارد (نه Fresh) */
       if(!andRel && /^FoxyVPN-v[\d.]+\.apk$/i.test(a.name)) andRel = {rel:rel, a:a};
+      /* کلیدساز: جدیدترین ریلیزی که FoxyKeygen-vX.Y.Z.apk دارد */
+      if(!kgRel && /^FoxyKeygen-v[\d.]+\.apk$/i.test(a.name)) kgRel = {rel:rel, a:a};
     });
   });
   if(winRel){
@@ -214,6 +218,10 @@ fetch('https://api.github.com/repos/sahandmarami/FoxyVPN-Rebuilt/releases?per_pa
     document.getElementById('andVer').textContent = 'v' + faVer(andRel.rel.tag_name);
     document.getElementById('andSize').textContent = mb(andRel.a.size);
     document.getElementById('status').innerHTML = '<span class="ok">✓</span> آخرین نسخه‌ها به‌صورت خودکار از گیت‌هاب گرفته شد';
+  }
+  if(kgRel){
+    document.getElementById('keygenLink').href = kgRel.a.browser_download_url;
+    document.getElementById('kgVer').textContent = 'v' + faVer(kgRel.rel.tag_name);
   }
 })
 .catch(function(){
