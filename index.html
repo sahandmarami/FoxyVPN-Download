@@ -135,8 +135,8 @@
   <div class="grid">
 
     <!-- ================= WINDOWS ================= -->
-    <a class="card win" id="cardWin" href="https://github.com/sahandmarami/FoxyVPN-Rebuilt/releases/download/desktop-v1.1.0/FoxyVPN-Desktop.exe">
-      <span class="ver"><span class="dot"></span><span id="winVer">v1.1.0</span></span>
+    <a class="card win" id="cardWin" href="https://github.com/sahandmarami/FoxyVPN-Windows/releases/download/v1.0.6/FoxyVPN-1.0.6-Windows-x64.zip">
+      <span class="ver"><span class="dot"></span><span id="winVer">v1.0.6</span></span>
       <div class="head">
         <span class="icon">
           <svg viewBox="0 0 24 24" fill="none">
@@ -148,10 +148,10 @@
         </span>
         <div>
           <div class="pname">ویندوز</div>
-          <div class="pdesc">نسخهٔ دسکتاپ — پنجرهٔ بزرگ، بدون کنسول</div>
+          <div class="pdesc">نسخهٔ دسکتاپ — ورود با کلید یا ایمیل</div>
         </div>
       </div>
-      <div class="size"><span>FoxyVPN-Desktop.exe</span><span>·</span><span id="winSize">8.1 MB</span></div>
+      <div class="size"><span>FoxyVPN-1.0.6-Windows-x64.zip</span><span>·</span><span id="winSize">24.2 MB</span></div>
       <span class="btn win">
         دانلود نسخهٔ ویندوز
         <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
@@ -223,7 +223,7 @@
 <script>
 /* لینک‌های پشتیبان (اگر API در دسترس نبود) */
 var FALLBACK = {
-  win: 'https://github.com/sahandmarami/FoxyVPN-Rebuilt/releases/download/desktop-v1.1.0/FoxyVPN-Desktop.exe',
+  win: 'https://github.com/sahandmarami/FoxyVPN-Windows/releases/download/v1.0.6/FoxyVPN-1.0.6-Windows-x64.zip',
   and: 'https://github.com/sahandmarami/FoxyVPN-Rebuilt/releases/download/v3.4.1-main-v2.3.1-keygen/FoxyVPN-v3.4.1.apk',
   kg: 'https://github.com/sahandmarami/FoxyVPN-Rebuilt/releases/download/v3.4.1-main-v2.3.1-keygen/FoxyKeygen-v2.3.1.apk'
 };
@@ -234,25 +234,15 @@ fetch('https://api.github.com/repos/sahandmarami/FoxyVPN-Rebuilt/releases?per_pa
 .then(function(r){ if(!r.ok) throw 0; return r.json(); })
 .then(function(rels){
   if(!Array.isArray(rels)) throw 0;
-  var winRel = null, andRel = null, kgRel = null;
+  var andRel = null, kgRel = null;
   rels.forEach(function(rel){
     (rel.assets||[]).forEach(function(a){
-      /* ویندوز: جدیدترین ریلیز desktop-* که exe دارد */
-      if(!winRel && /^desktop-/.test(rel.tag_name) && /\.exe$/i.test(a.name)) winRel = {rel:rel, a:a};
-      /* ویندوز: در نبود desktop، windows-* با FoxyVPN.exe */
-      if(!winRel && /^windows-/.test(rel.tag_name) && /^FoxyVPN\.exe$/i.test(a.name)) winRel = {rel:rel, a:a};
       /* اندروید: جدیدترین ریلیزی که FoxyVPN-vX.Y.Z.apk دارد (نه Fresh) */
       if(!andRel && /^FoxyVPN-v[\d.]+\.apk$/i.test(a.name)) andRel = {rel:rel, a:a};
       /* کلیدساز: جدیدترین ریلیزی که FoxyKeygen-vX.Y.Z.apk دارد */
       if(!kgRel && /^FoxyKeygen-v[\d.]+\.apk$/i.test(a.name)) kgRel = {rel:rel, a:a};
     });
   });
-  if(winRel){
-    document.getElementById('cardWin').href = winRel.a.browser_download_url;
-    document.getElementById('winVer').textContent = 'v' + faVer(winRel.rel.tag_name);
-    document.getElementById('winSize').textContent = mb(winRel.a.size);
-    document.getElementById('status').innerHTML = '<span class="ok">✓</span> آخرین نسخه‌ها به‌صورت خودکار از گیت‌هاب گرفته شد';
-  }
   if(andRel){
     document.getElementById('cardAnd').href = andRel.a.browser_download_url;
     document.getElementById('andVer').textContent = 'v' + faVer(andRel.rel.tag_name);
@@ -267,6 +257,28 @@ fetch('https://api.github.com/repos/sahandmarami/FoxyVPN-Rebuilt/releases?per_pa
 .catch(function(){
   document.getElementById('status').textContent = 'نسخه‌های پیش‌فرض نمایش داده می‌شود (دانلود سالم است)';
 });
+
+/* ویندوز: نسخهٔ رسمی از ریپوی FoxyVPN-Windows (اپ Flutter با ورود کلید) —
+   جدیدترین ریلیزی که فایل Windows-x64.zip یا Setup exe دارد */
+fetch('https://api.github.com/repos/sahandmarami/FoxyVPN-Windows/releases?per_page=20')
+.then(function(r){ if(!r.ok) throw 0; return r.json(); })
+.then(function(rels){
+  if(!Array.isArray(rels)) throw 0;
+  var winRel = null;
+  rels.forEach(function(rel){
+    if(winRel) return;
+    (rel.assets||[]).forEach(function(a){
+      if(!winRel && /FoxyVPN-[\d.]+-Windows-x64\.(zip|exe)$/i.test(a.name)) winRel = {rel:rel, a:a};
+    });
+  });
+  if(winRel){
+    document.getElementById('cardWin').href = winRel.a.browser_download_url;
+    document.getElementById('winVer').textContent = 'v' + faVer(winRel.rel.tag_name);
+    document.getElementById('winSize').textContent = mb(winRel.a.size);
+    document.getElementById('status').innerHTML = '<span class="ok">✓</span> آخرین نسخه‌ها به‌صورت خودکار از گیت‌هاب گرفته شد';
+  }
+})
+.catch(function(){ /* لینک پشتیبان v1.0.6 سر جایش می‌ماند */ });
 </script>
 </body>
 </html>
